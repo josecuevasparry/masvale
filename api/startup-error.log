@@ -1,0 +1,44 @@
+[startup] 2026-10-29T15:25:25.303Z no se pudo iniciar el API (listen)
+  cwd: C:\pepe\desarrollo\masvale\masvale-sitio
+  archivo: C:\pepe\desarrollo\masvale\masvale-sitio\api\server.cjs
+  node: v24.21.0
+  PORT: 4000
+  error: EADDRINUSE Error: listen EADDRINUSE: address already in use :::4000
+    at Server.setupListenHandle [as _listen2] (node:net:2328:16)
+    at listenInCluster (node:net:2437:12)
+    at Server.listen (node:net:2562:7)
+    at app.listen (C:\pepe\desarrollo\masvale\masvale-sitio\node_modules\express\lib\application.js:605:24)
+    at C:\pepe\desarrollo\masvale\masvale-sitio\api\server.cjs:142:24
+    at new Promise (<anonymous>)
+    at start (C:\pepe\desarrollo\masvale\masvale-sitio\api\server.cjs:141:10)
+    at async boot (C:\pepe\desarrollo\masvale\masvale-sitio\api\server.cjs:167:20)
+[startup] 2026-11-18T13:45:38.916Z no se pudo iniciar el API (listen)
+  cwd: C:\pepe\desarrollo\masvale\masvale-sitio
+  archivo: C:\pepe\desarrollo\masvale\masvale-sitio\api\server.cjs
+  node: v24.21.0
+  PORT: 4000
+  error: EADDRINUSE Error: listen EADDRINUSE: address already in use :::4000
+    at Server.setupListenHandle [as _listen2] (node:net:2328:16)
+    at listenInCluster (node:net:2437:12)
+    at Server.listen (node:net:2562:7)
+    at app.listen (C:\pepe\desarrollo\masvale\masvale-sitio\node_modules\express\lib\application.js:605:24)
+    at C:\pepe\desarrollo\masvale\masvale-sitio\api\server.cjs:144:24
+    at new Promise (<anonymous>)
+    at start (C:\pepe\desarrollo\masvale\masvale-sitio\api\server.cjs:143:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async boot (C:\pepe\desarrollo\masvale\masvale-sitio\api\server.cjs:169:20)
+[startup] 2026-11-18T15:01:21.489Z no se pudo iniciar el API (listen)
+  cwd: C:\pepe\desarrollo\masvale\masvale-sitio
+  archivo: C:\pepe\desarrollo\masvale\masvale-sitio\api\server.cjs
+  node: v24.21.0
+  PORT: 4000
+  error: EADDRINUSE Error: listen EADDRINUSE: address already in use :::4000
+    at Server.setupListenHandle [as _listen2] (node:net:2328:16)
+    at listenInCluster (node:net:2437:12)
+    at Server.listen (node:net:2562:7)
+    at app.listen (C:\pepe\desarrollo\masvale\masvale-sitio\node_modules\express\lib\application.js:605:24)
+    at C:\pepe\desarrollo\masvale\masvale-sitio\api\server.cjs:144:24
+    at new Promise (<anonymous>)
+    at start (C:\pepe\desarrollo\masvale\masvale-sitio\api\server.cjs:143:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async boot (C:\pepe\desarrollo\masvale\masvale-sitio\api\server.cjs:169:20)

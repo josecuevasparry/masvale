@@ -1,1 +1,9 @@
 node_modules
+.env
+build
+deploy
+tools
+data
+.npm-cache
+api/.env
+api/google-service-account.json

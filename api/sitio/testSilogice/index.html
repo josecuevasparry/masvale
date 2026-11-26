@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Test Silogice — Masvale Consultores</title>
+  <style>
+    :root { --azul: #264F9E; --azul-oscuro: #1d3f80; --tinta: #1f2937; --gris: #6b7280; --borde: #e5e7eb; --verde: #16a34a; --rojo: #dc2626; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Open Sans", Arial, sans-serif; color: var(--tinta); background: #f6f9ff; line-height: 1.55; }
+    header.site { background: var(--azul); color: #fff; padding: 18px 16px; }
+    header.site .wrap { max-width: 860px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+    header.site img { height: 48px; width: auto; }
+    header.site .name { font-size: 18px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
+    main { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+    h1 { color: var(--azul); font-size: 28px; margin: 0 0 8px; }
+    .intro { color: var(--gris); margin: 0 0 24px; }
+    .card { background: #fff; border: 1px solid var(--borde); border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+    .q-num { font-weight: 700; color: var(--azul); margin: 0 0 10px; font-size: 15px; }
+    label.opt { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border: 1px solid var(--borde); border-radius: 10px; margin-bottom: 8px; cursor: pointer; transition: border-color .15s, background .15s; }
+    label.opt:hover { border-color: var(--azul); background: #f4f8ff; }
+    label.opt input { margin-top: 3px; accent-color: var(--azul); }
+    label.opt.chosen { border-color: var(--azul); background: #eef3ff; }
+    .actions { display: flex; align-items: center; gap: 14px; margin-top: 8px; }
+    button#submit { background: var(--azul); color: #fff; border: 0; border-radius: 999px; padding: 13px 28px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background .15s; }
+    button#submit:hover { background: var(--azul-oscuro); }
+    #results { margin-top: 20px; }
+    #results .score { font-size: 22px; font-weight: 700; color: var(--azul); margin: 0 0 10px; }
+    #results p { margin: 0 0 14px; color: var(--tinta); }
+    .wa { display: inline-block; background: #25D366; color: #fff; text-decoration: none; font-weight: 600; padding: 10px 18px; border-radius: 999px; }
+    .wa:hover { background: #1eb857; }
+    .correct { color: var(--verde); border-color: var(--verde) !important; background: #f0fdf4 !important; }
+    .wrong { color: var(--rojo); border-color: var(--rojo) !important; background: #fef2f2 !important; }
+    footer { max-width: 860px; margin: 0 auto; padding: 0 16px 40px; color: var(--gris); font-size: 13px; }
+    footer a { color: var(--azul); }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <img src="/logo-masvale.png" alt="Masvale Consultores" />
+      <span class="name">Masvale Consultores</span>
+    </div>
+  </header>
+
+  <main>
+    <h1>Test Silogice</h1>
+    <p class="intro">
+      Elige, en cada par, la frase que mejor representa una manera positiva,
+      responsable e integradora de expresarte.
+    </p>
+
+    <div id="quiz"></div>
+
+    <div class="actions">
+      <button id="submit" type="button">Ver mi puntaje</button>
+    </div>
+
+    <div id="results"></div>
+  </main>
+
+  <footer>
+    © Masvale Consultores · Método Silogice ·
+    <a href="/">Volver al sitio</a>
+  </footer>
+
+  <script>
+    var QUESTIONS = [
+      { q: '01', answers: { a: 'Yo puedo, soy Capaz.', b: 'He tenido mala suerte.' }, correct: 'a' },
+      { q: '02', answers: { a: 'No me dejan avanzar.', b: 'A veces cometo errores en mis relaciones con otras personas.' }, correct: 'b' },
+      { q: '03', answers: { a: 'Tengo buenas razones para estar bien.', b: 'Si tuviera recursos lo haría muy bien.' }, correct: 'a' },
+      { q: '04', answers: { a: 'La vida no me ha dado oportunidades.', b: 'Generalmente busco oportunidades.' }, correct: 'b' },
+      { q: '05', answers: { a: 'Cada persona tiene algo positivo para mi vida.', b: 'Si hubiera nacido en otra época, mi vida no estaría tan mal.' }, correct: 'a' },
+      { q: '06', answers: { a: 'La vida no me ha tratado tan mal.', b: 'He fracasado algunas veces.' }, correct: 'b' },
+      { q: '07', answers: { a: 'A veces cometo errores en mi trabajo.', b: 'No lo hago tan mal.' }, correct: 'a' },
+      { q: '08', answers: { a: 'Construyo relaciones positivas con personas.', b: 'He tenido mala suerte en el amor.' }, correct: 'a' },
+      { q: '09', answers: { a: 'Nací en el momento incorrecto.', b: 'Puedo avanzar hacia mis objetivos.' }, correct: 'b' },
+      { q: '10', answers: { a: 'A veces no alcanzo los objetivos que me propongo.', b: 'Algunas situaciones me frustran.' }, correct: 'a' },
+      { q: '11', answers: { a: 'Mis logros dependen de mí.', b: 'Hay personas que me impiden salir adelante.' }, correct: 'a' },
+      { q: '12', answers: { a: 'He tenido mala suerte en la amistad.', b: 'Tengo buenas personas a mi alrededor.' }, correct: 'b' },
+      { q: '13', answers: { a: 'Cada día es una oportunidad para estar bien.', b: 'Si me dejaran, yo haría maravillas.' }, correct: 'a' },
+      { q: '14', answers: { a: 'No me dan las oportunidades, por eso no logro mis objetivos.', b: 'Puedo disfrutar de la vida si quiero.' }, correct: 'b' },
+      { q: '15', answers: { a: 'Me agrada ser como soy.', b: 'Mi vida no ha sido nada de mala.' }, correct: 'a' },
+      { q: '16', answers: { a: 'Estoy satisfecho con mis logros.', b: 'Me falta mucho.' }, correct: 'a' },
+      { q: '17', answers: { a: 'Peor es nada.', b: 'Puedo construir mi felicidad.' }, correct: 'b' },
+      { q: '18', answers: { a: 'Puedo tener tranquilidad si me lo propongo.', b: 'No creo ser incapaz.' }, correct: 'a' },
+      { q: '19', answers: { a: 'La gente me hace sufrir.', b: 'He logrado metas usando mis habilidades y conocimientos.' }, correct: 'b' },
+      { q: '20', answers: { a: 'Con lo que tengo y lo que soy, puedo lograr mis objetivos.', b: 'No puedo decir que ha sido malo.' }, correct: 'a' },
+      { q: '21', answers: { a: 'La vida es muy difícil.', b: 'Cuento con personas que me brindan buena compañía.' }, correct: 'b' },
+      { q: '22', answers: { a: 'Tengo motivos para estar feliz.', b: 'La vida me ha tratado mal.' }, correct: 'a' },
+      { q: '23', answers: { a: 'El mundo va de mal en peor.', b: 'Tengo esperanza en el futuro de la humanidad.' }, correct: 'b' },
+      { q: '24', answers: { a: 'Tengo razones para decir que mi vida es buena.', b: 'El planeta está al borde de la destrucción total.' }, correct: 'a' },
+      { q: '25', answers: { a: 'Si no fuera por algunas personas, yo estaría muy bien.', b: 'Cuento con el apoyo de otras personas para lograr mis metas.' }, correct: 'b' },
+      { q: '26', answers: { a: 'Yo soy muy hábil en algunos aspectos.', b: 'Si me dejaran, haría muy bien las cosas.' }, correct: 'a' },
+      { q: '27', answers: { a: 'Hay personas que me hacen la vida imposible.', b: 'Siempre puedo analizar la vida desde otro punto de vista.' }, correct: 'b' },
+      { q: '28', answers: { a: 'Cada día es una oportunidad de estar bien.', b: 'Ciertas personas me hacen rabiar y enojar.' }, correct: 'a' },
+      { q: '29', answers: { a: 'La vida es dura.', b: 'Esta época es un buen momento para vivir mi vida.' }, correct: 'b' },
+      { q: '30', answers: { a: 'Acepto que algunas cosas están fuera de mis posibilidades.', b: 'Podría ser peor.' }, correct: 'a' }
+    ];
+
+    var quizEl = document.getElementById('quiz');
+    var resultsEl = document.getElementById('results');
+    var submitBtn = document.getElementById('submit');
+
+    // Render the questions.
+    var html = '';
+    for (var i = 0; i < QUESTIONS.length; i++) {
+      var q = QUESTIONS[i];
+      html += '<div class="card" data-q="' + i + '">'
+        + '<p class="q-num">' + q.q + '</p>'
+        + '<label class="opt"><input type="radio" name="question' + i + '" value="a"><span>' + q.answers.a + '</span></label>'
+        + '<label class="opt"><input type="radio" name="question' + i + '" value="b"><span>' + q.answers.b + '</span></label>'
+        + '</div>';
+    }
+    quizEl.innerHTML = html;
+
+    // Highlight the chosen option.
+    quizEl.addEventListener('change', function (e) {
+      if (e.target && e.target.type === 'radio') {
+        var card = e.target.closest('.card');
+        var labels = card.querySelectorAll('label.opt');
+        for (var i = 0; i < labels.length; i++) labels[i].classList.remove('chosen');
+        e.target.closest('label').classList.add('chosen');
+      }
+    });
+
+    submitBtn.addEventListener('click', function () {
+      var numCorrect = 0;
+      var answers = [];
+      for (var i = 0; i < QUESTIONS.length; i++) {
+        var checked = quizEl.querySelector('input[name=question' + i + ']:checked');
+        var value = checked ? checked.value : '';
+        answers.push(value);
+        if (value === QUESTIONS[i].correct) numCorrect++;
+
+        var card = quizEl.querySelector('[data-q="' + i + '"]');
+        var labels = card.querySelectorAll('label.opt');
+        for (var j = 0; j < labels.length; j++) {
+          var input = labels[j].querySelector('input');
+          labels[j].classList.remove('correct', 'wrong');
+          if (input.value === QUESTIONS[i].correct) {
+            labels[j].classList.add('correct');
+          } else if (input.checked) {
+            labels[j].classList.add('wrong');
+          }
+        }
+      }
+
+      var puntaje = Math.round((numCorrect * 100) / QUESTIONS.length);
+      if (puntaje < 100) {
+        resultsEl.innerHTML =
+          '<div class="card">'
+          + '<p class="score">Su puntaje SILOGICE es: ' + puntaje + '%</p>'
+          + '<p>Analice las frases desde el punto de vista del Lenguaje Positivo, Lenguaje Responsable y Lenguaje Integrador.</p>'
+          + '<p>Si quieres conversar sobre alguna(s) de las afirmaciones del test, '
+          + '<a class="wa" href="https://wa.me/56978451395?text=Hola%20Jose%2C%20me%20interesa%20conversar%20sobre%20SILOGICE">Envíanos un WhatsApp</a></p>'
+          + '</div>';
+      } else {
+        resultsEl.innerHTML =
+          '<div class="card"><p class="score">¡Felicitaciones! Su puntaje SILOGICE es: 100%</p></div>';
+      }
+
+      // Record the submission (fire-and-forget).
+      try {
+        fetch('/api/test-silogice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ answers: answers, score: puntaje })
+        }).catch(function () {});
+      } catch (e) {}
+
+      resultsEl.scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

@@ -1,24 +1,42 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
-
 @import "tailwindcss/base";
 @import "tailwindcss/components";
-@import "tailwindcss/utilities"; 
-@import url("https://fonts.googleapis.com/css2?family=Poiret+One&display=swap");
+@import "tailwindcss/utilities";
+@import "./styles/fonts.css";
 
-
-
+/* Open Sans is self-hosted in public/fonts (see src/styles/fonts.css). */
 body {
-  font-family: "Poiret One";
+  font-family: "Open Sans", "Inter", system-ui, sans-serif;
 }
 
-.andres {
-  /* background: linear-gradient(to right, #81d1e5 0%,#8de3e7 18%,#85c7e5 31%,#83c3e5 33%,#6769df 50%,#8839cd 76%,#d55396 100%); */
-  background:
-    linear-gradient(to right, #00c3ff 10%, #00a2ff 40%, #9b65c8 100%);
+/**
+ * Card banner: alternates the clip's still with a banner carrying the product
+ * name. It fades in and out (opacity only, no movement) and starts hidden so it
+ * is off when the animation is disabled for reduced motion; the title is also in
+ * the card's own heading, so nothing is lost.
+ */
+.card-banner {
+  opacity: 0;
+  animation: card-banner-fade 8s ease-in-out infinite;
+  will-change: opacity;
 }
-.texto-sombra {
-  text-shadow: 1px 1px 1px #434040;
+
+@keyframes card-banner-fade {
+  0%,
+  8% {
+    opacity: 0;
+  }
+  16%,
+  58% {
+    opacity: 1;
+  }
+  68%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-banner {
+    animation: none;
+  }
 }
